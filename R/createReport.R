@@ -765,14 +765,19 @@ createReport = function(txt_folder = NULL,
   #cat("Dumping plot objects as Rdata file ...")
   #save(file = rprt_fns$R_plots_file, list = "GPL")
   #cat(" done\n")
-  
+
+  ## output plots to global environment for editing
+  cat("Dumping lst_qcMetrics to global environment...") 
+  list2env(lst_qcMetrics, envir = .GlobalEnv) 
+  cat(" done\n")
+
   ## write shortnames and sorting of filenames (again)
   eval(expr_fn_map)$writeMappingFile(rprt_fns$filename_sorting)
   
   cat(paste("Report file created at\n\n    ", rprt_fns$report_file_prefix, ".*\n\n", sep=""))
   cat(paste0("\n\nTime elapsed: ", round(as.double(Sys.time() - time_start, units="mins"), 1), " min\n\n"))
 
- 
+
   ## return path to PDF report and YAML config, etc
   return(rprt_fns)
 }
